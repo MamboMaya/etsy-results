@@ -12,7 +12,12 @@ class ProductList extends Component {
         // applied to the component as a `product` property
         return (
             <ul className="ProductList">
-
+            {products.map(product =>{
+              return(
+                <Product key={product.listing_id}
+                product={product}/>
+              )
+            })}
             </ul>
         );
     }
@@ -24,16 +29,18 @@ class ProductList extends Component {
 // - `overTwenty`
 // - `all` or the default
 const mapStateToProps = function(state) {
-    let products;
+    let products = state.products
     // complete the `if else` statement including conditions and `products` value
-    if (state === 'underTwenty') {
-      console.log('UNDER TWENTY');
-    } else if (state === 'overTwenty') {
-      console.log('OVER Twenty');
-    } else {
-
-    }
-
+    if (state.filter === 'underTwenty') {
+      products = products.filter(product =>{
+        return parseFloat(product.price)<20
+      })
+    } else if (state.filter === 'overTwenty') {
+      products = products.filter(product =>{
+        return parseFloat(product.price)>20
+    })
+  }
+  // console.log("aaaaffter", products);
     return {products: products}
 }
 
